@@ -3,44 +3,51 @@ import beautician from "../../../assets/saloon.svg";
 import doctor from "../../../assets/doctor.svg";
 import electrician from "../../../assets/electrician.svg";
 import plumber from "../../../assets/plumber.svg";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
+  const catList = [
+    {
+      name: "Beautician",
+      icon: beautician,
+    },
+    {
+      name: "Doctor",
+      icon: doctor,
+    },
+    {
+      name: "Electician",
+      icon: electrician,
+    },
+    {
+      name: "Plumber",
+      icon: plumber,
+    },
+  ];
   return (
     <section className="max-w-7xl mx-auto">
       <h3 className="text-center mt-10 mb-4 text-2xl">Service Categories</h3>
-      <div className="grid  md:grid-cols-6 grid-cols-1">
-        <div className="flex border h-40 items-center justify-center flex-col rounded-lg m-3">
-          <img src={beautician} alt="icon" className="w-12" />
-          <p className="font-bold mt-1">Beautician</p>
-        </div>
-        <div className="flex border h-40 items-center justify-center flex-col rounded-lg m-3">
-          <img src={doctor} alt="icon" className="w-12" />
-          <p className="font-bold mt-1">Doctor</p>
-        </div>
-        <div className="flex border h-40 items-center justify-center flex-col rounded-lg m-3">
-          <img src={electrician} alt="icon" className="w-12" />
-          <p className="font-bold mt-1">Electrician</p>
-        </div>
-        <div className="flex border h-40 items-center justify-center flex-col rounded-lg m-3">
-          <img src={plumber} alt="icon" className="w-12" />
-          <p className="font-bold mt-1">Plumber</p>
-        </div>
-        <div className="flex border h-40 items-center justify-center flex-col rounded-lg m-3">
-          <img src={electrician} alt="icon" className="w-12" />
-          <p className="font-bold mt-1">Electrician</p>
-        </div>
-        <div className="flex border h-40 items-center justify-center flex-col rounded-lg m-3">
-          <img src={plumber} alt="icon" className="w-12" />
-          <p className="font-bold mt-1">Plumber</p>
-        </div>
-        <div className="flex border h-40 items-center justify-center flex-col rounded-lg m-3">
-          <img src={electrician} alt="icon" className="w-12" />
-          <p className="font-bold mt-1">Electrician</p>
-        </div>
-        <div className="flex border h-40 items-center justify-center flex-col rounded-lg m-3">
-          <img src={plumber} alt="icon" className="w-12" />
-          <p className="font-bold mt-1">Plumber</p>
-        </div>
+      <div className="grid  md:grid-cols-6 grid-cols-1 align-c">
+        {catList.map((category, i) => {
+          return (
+            <Link to={`/search/${category.name}`} key={i}>
+              <div
+                className="flex 
+                          border 
+                          h-40 
+                          items-center 
+                          justify-center 
+                          flex-col 
+                          rounded-lg m-3 
+                          hover:border-purple-900 
+                          hover:bg-cyan-100"
+              >
+                <img src={category.icon} alt="icon" className="w-12" />
+                <p className="font-bold mt-1">{category.name}</p>
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </section>
   );

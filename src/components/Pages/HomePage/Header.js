@@ -3,7 +3,7 @@ import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import logo from "../../../assets/logo.svg";
 import { Link } from "react-router-dom";
-const Header = () => {
+const Header = (props) => {
   return (
     <Popover className="relative bg-white  border-b-2 border-gray-100">
       <div className="max-w-7xl mx-auto px-2 sm:px-4">
@@ -47,18 +47,18 @@ const Header = () => {
             </a>
           </Popover.Group>
           <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-            <a
-              href="/"
+            <span
+              onClick={props.toggleLogin}
               className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
             >
               Sign in
-            </a>
-            <a
-              href="/"
+            </span>
+            <span
+              onClick={props.toggleLogin}
               className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
             >
               Sign up
-            </a>
+            </span>
           </div>
         </div>
       </div>

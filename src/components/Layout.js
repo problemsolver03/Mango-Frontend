@@ -3,7 +3,7 @@ import Header from "./Pages/HomePage/Header";
 const Layout = (props) => {
   return (
     <div>
-      <Header></Header>
+      <Header toggleLogin={props.toggleLogin}></Header>
       {props.children}
     </div>
   );
