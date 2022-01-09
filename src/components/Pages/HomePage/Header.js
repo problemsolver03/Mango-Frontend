@@ -33,29 +33,24 @@ const Header = (props) => {
             >
               About
             </Link>
-            <a
-              href="/"
-              className="text-base font-medium text-gray-500 hover:text-gray-900"
-            >
-              Services
-            </a>
-            <a
-              href="/"
+
+            <Link
+              to="/contact"
               className="text-base font-medium text-gray-500 hover:text-gray-900"
             >
               Contact
-            </a>
+            </Link>
           </Popover.Group>
           <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
             <span
               onClick={props.toggleLogin}
-              className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+              className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 cursor-pointer"
             >
               Sign in
             </span>
             <span
               onClick={props.toggleLogin}
-              className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+              className="cursor-pointer ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
             >
               Sign up
             </span>
@@ -109,31 +104,23 @@ const Header = (props) => {
                 >
                   About
                 </Link>
-                <a
-                  href="/"
-                  className="text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  Services
-                </a>
-                <a
-                  href="/"
+
+                <Link
+                  to="/contact"
                   className="text-base font-medium text-gray-900 hover:text-gray-700"
                 >
                   Contact
-                </a>
+                </Link>
               </div>
               <div>
-                <a
-                  href="/"
-                  className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                >
+                <span className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
                   Sign up
-                </a>
+                </span>
                 <p className="mt-6 text-center text-base font-medium text-gray-500">
                   Existing customer?{" "}
-                  <a href="/" className="text-indigo-600 hover:text-indigo-500">
+                  <span className="text-indigo-600 hover:text-indigo-500">
                     Sign in
-                  </a>
+                  </span>
                 </p>
               </div>
             </div>

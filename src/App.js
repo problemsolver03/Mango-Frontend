@@ -2,6 +2,8 @@ import Home from "./components/Pages/HomePage/Home";
 import Aboutus from "./components/Pages/Aboutus/Aboutus";
 import ServiceDetails from "./components/Pages/ServiceDetails/ServiceDetails";
 import Search from "./components/Pages/Search/Search";
+import Dashboard from "./components/Pages/Dashboard/Dashboard";
+import Contact from "./components/Pages/Contact/Contact";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -17,6 +19,8 @@ function App() {
             exact
           ></Route>
           <Route path="/search/:query" component={Search} exact></Route>
+          <Route path="/dashboard" component={Dashboard} exact></Route>
+          <Route path="/contact" component={Contact} exact></Route>
         </Switch>
       </Router>
     </div>

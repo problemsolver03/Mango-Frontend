@@ -1,7 +1,7 @@
 import React from "react";
 import userImage from "../../../assets/50.jpg";
-import { StarIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
+import Rating from "../../Common/Rating";
 
 const ProfileCard = () => {
   return (
@@ -15,12 +15,7 @@ const ProfileCard = () => {
         <div className="ml-4">
           <h5 className=" text-lg">Mr. Superman Kumar</h5>
           <p>#Beautician, #Stylist</p>
-          <div className="mt-1 flex">
-            <StarIcon className="w-6 h-6 text-yellow-400"></StarIcon>
-            <StarIcon className="w-6 h-6 text-yellow-400"></StarIcon>
-            <StarIcon className="w-6 h-6 text-yellow-400"></StarIcon>
-            <StarIcon className="w-6 h-6 text-yellow-400"></StarIcon>
-          </div>
+          <Rating />
         </div>
       </div>
     </Link>
