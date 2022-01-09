@@ -2,9 +2,15 @@
 import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
+import logo from "../../../assets/logo.svg";
 
 const Login = (props) => {
   const [open, setOpen] = useState(false);
+  const [login, setLogin] = useState(true);
+
+  const toggleLoginForm = () => {
+    setLogin(!login);
+  };
 
   useEffect(() => {
     setOpen(props.show);
@@ -65,24 +71,102 @@ const Login = (props) => {
                 </Transition.Child>
                 <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
                   <div className="px-4 sm:px-6">
-                    <Dialog.Title className="text-lg font-medium text-gray-900 ">
-                      <span className="border-b-4 border-cyan-900 pb-1">
-                        Login or Register
-                      </span>
+                    <img src={logo} alt="logo" className="w-40 block mb-8" />
+                    <Dialog.Title className="text-xl font-medium text-gray-900 ">
+                      <span className="pb-1">Login or Register</span>
+                      <small className="block text-gray-500 text-sm">
+                        Login to access your appointments and services
+                      </small>
                     </Dialog.Title>
                   </div>
                   <div className="mt-6 relative flex-1 px-4 sm:px-6">
                     <div className="absolute inset-0 px-4 sm:px-6">
-                      <form>
-                        <div>
-                          <label className="block mb-1">Username</label>
-                          <input
-                            type="text"
-                            placeHolder="abc@gmail.com"
-                            className="border p-3 w-full"
-                          />
-                        </div>
-                      </form>
+                      {login ? (
+                        <form>
+                          <div>
+                            <label className="block mb-1 text-gray-600">
+                              Email
+                            </label>
+                            <input
+                              type="text"
+                              placeHolder="abc@gmail.com"
+                              className="border p-3 w-full rounded"
+                            />
+                          </div>
+                          <div className="mt-3">
+                            <label className="block mb-1 text-gray-600">
+                              Password
+                            </label>
+                            <input
+                              type="password"
+                              className="border p-3 w-full rounded"
+                            />
+                          </div>
+                          <div className="mt-6">
+                            <button
+                              type="submit"
+                              className=" bg-indigo-700 text-white p-3 w-full rounded hover:bg-indigo-800"
+                            >
+                              Login
+                            </button>
+                          </div>
+                        </form>
+                      ) : (
+                        <form>
+                          <div>
+                            <label className="block mb-1 text-gray-600">
+                              Name
+                            </label>
+                            <input
+                              type="text"
+                              placeHolder="abc@gmail.com"
+                              className="border p-3 w-full rounded"
+                            />
+                          </div>
+                          <div className="mt-3">
+                            <label className="block mb-1 text-gray-600">
+                              Email
+                            </label>
+                            <input
+                              type="text"
+                              placeHolder="abc@gmail.com"
+                              className="border p-3 w-full rounded"
+                            />
+                          </div>
+                          <div className="mt-3">
+                            <label className="block mb-1 text-gray-600">
+                              Password
+                            </label>
+                            <input
+                              type="password"
+                              className="border p-3 w-full rounded"
+                            />
+                          </div>
+                          <div className="mt-6">
+                            <button
+                              type="submit"
+                              className=" bg-indigo-700 text-white p-3 w-full rounded hover:bg-indigo-800"
+                            >
+                              Register
+                            </button>
+                          </div>
+                        </form>
+                      )}
+
+                      <div className="flex justify-between mt-3">
+                        <span className=" text-indigo-700 text-sm cursor-pointer hover:text-indigo-900 hover:underline">
+                          {login ? (
+                            <span onClick={toggleLoginForm}>New user?</span>
+                          ) : (
+                            <span onClick={toggleLoginForm}>
+                              Already registered?
+                            </span>
+                          )}
+                        </span>
+                        <span className=" text-indigo-700 text-sm cursor-pointer hover:text-indigo-900 hover:underline">
+                          Forgot Password?
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
