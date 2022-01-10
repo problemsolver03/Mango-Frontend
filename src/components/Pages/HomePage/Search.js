@@ -13,7 +13,7 @@ const Search = (props) => {
   return (
     <div className="bg-gray-50">
       <div className="max-w-7xl mx-auto py-14 px-4 sm:px-6 lg:py-20 lg:px-8 ">
-        <div class="grid grid-cols-2">
+        <div className="grid grid-cols-2">
           <div>
             <h2 className="text-3xl  text-gray-900 sm:text-4xl">
               <span className="block text-2xl font-bold">

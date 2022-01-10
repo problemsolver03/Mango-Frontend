@@ -6,7 +6,9 @@ import Layout from "../../Layout";
 import Login from "./Login";
 const Home = () => {
   const [showLogin, setLoginStatus] = useState(false);
-  const toggleLogin = () => {
+  const [loginType, setLoginType] = useState("login");
+  const toggleLogin = (type) => {
+    setLoginType(type);
     setLoginStatus(!showLogin);
   };
   return (
@@ -14,7 +16,7 @@ const Home = () => {
       <Search />
       <Recommended />
       <Categories />
-      <Login show={showLogin} toggleLogin={toggleLogin} />
+      <Login show={showLogin} toggleLogin={toggleLogin} loginType={loginType} />
     </Layout>
   );
 };

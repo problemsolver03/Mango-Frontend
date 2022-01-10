@@ -14,6 +14,11 @@ const Login = (props) => {
 
   useEffect(() => {
     setOpen(props.show);
+    if (props.loginType === "login") {
+      setLogin(true);
+    } else if (props.loginType === "register") {
+      setLogin(false);
+    }
   }, [props.show]);
 
   return (
