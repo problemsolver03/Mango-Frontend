@@ -52,21 +52,17 @@ const ServiceDetails = () => {
               <hr className="-ml-4 -mr-4 " />
               <div className="flex mt-4 mb-4">
                 <div className="w-1/2">
-                  <p className="text-gray-400 text-sm font-semibold">
-                    Category
-                  </p>
+                  <p className="text-gray-600 pb-1 text-sm ">Category</p>
                   <p>Doctor</p>
                 </div>
                 <div className="w-1/2">
-                  <p className="text-gray-400 text-sm font-semibold">Price</p>
+                  <p className="text-gray-600 pb-1 text-sm ">Price</p>
                   <p>USD 23.45</p>
                 </div>
               </div>
               <hr className="-ml-4 -mr-4" />
               <div className="mt-5 mb-4">
-                <p className="text-gray-400 text-sm font-semibold">
-                  About service
-                </p>
+                <p className="text-gray-600 pb-1 text-sm ">About service</p>
                 <p>
                   It is a long established fact that a reader will be distracted
                   by the readable content of a page when looking at its layout.
@@ -77,9 +73,7 @@ const ServiceDetails = () => {
               </div>
 
               <div className="mt-5 mb-4">
-                <p className="text-gray-400 text-sm font-semibold pb-2">
-                  Reviews
-                </p>
+                <p className="text-gray-600 text-sm  pb-2">Reviews</p>
                 <ServiceReviews />
                 <ServiceReviews />
                 <ServiceReviews />

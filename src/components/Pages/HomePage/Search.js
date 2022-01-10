@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { SearchIcon } from "@heroicons/react/outline";
 import { withRouter } from "react-router-dom";
+import bannerImg from "../../../assets/banner.svg";
 
 const Search = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,7 +14,7 @@ const Search = (props) => {
   return (
     <div className="bg-gray-50">
       <div className="max-w-7xl mx-auto py-14 px-4 sm:px-6 lg:py-20 lg:px-8 ">
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-2 content-center">
           <div>
             <h2 className="text-3xl  text-gray-900 sm:text-4xl">
               <span className="block text-2xl font-bold">
@@ -53,7 +54,9 @@ const Search = (props) => {
             </form>
           </div>
 
-          <div>01</div>
+          <div>
+            <img src={bannerImg} alt="banner" className="w-96 mx-auto" />
+          </div>
         </div>
       </div>
     </div>
