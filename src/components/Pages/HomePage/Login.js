@@ -3,10 +3,19 @@ import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import logo from "../../../assets/logo.svg";
+import Cookies from "universal-cookie/es6";
+import axios from "axios";
+import { RefreshIcon } from "@heroicons/react/solid";
 
 const Login = (props) => {
   const [open, setOpen] = useState(false);
   const [login, setLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+  const [registerError, setRegisterError] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const toggleLoginForm = () => {
     setLogin(!login);
@@ -20,6 +29,39 @@ const Login = (props) => {
       setLogin(false);
     }
   }, [props.show]);
+
+  const registerHandler = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    let postObject = { name, username: email, password };
+    axios
+      .post("https://mango-api-server.herokuapp.com/signup", postObject)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    setLoading(false);
+  };
+  const loginHandler = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    let postObject = { username: email, password };
+    axios
+      .post("https://mango-api-server.herokuapp.com/login", postObject)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoginError(true);
+      });
+    setLoading(false);
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -87,7 +129,18 @@ const Login = (props) => {
                   <div className="mt-6 relative flex-1 px-4 sm:px-6">
                     <div className="absolute inset-0 px-4 sm:px-6">
                       {login ? (
-                        <form>
+                        <form onSubmit={loginHandler}>
+                          {loginError ? (
+                            <div className="rounded pt-3 pb-3 pl-6 pr-6 bg-orange-100 mb-4">
+                              <p className="text-orange-800 font-semibold">
+                                Error
+                              </p>
+                              <p className="text-orange-800">
+                                Invalid credentials entered please try again.
+                              </p>
+                            </div>
+                          ) : null}
+
                           <div>
                             <label className="block mb-1 text-gray-600">
                               Email
@@ -96,6 +149,11 @@ const Login = (props) => {
                               type="text"
                               placeHolder="abc@gmail.com"
                               className="border p-3 w-full rounded"
+                              required
+                              onChange={(e) => {
+                                setEmail(e.target.value);
+                              }}
+                              value={email}
                             />
                           </div>
                           <div className="mt-3">
@@ -105,6 +163,11 @@ const Login = (props) => {
                             <input
                               type="password"
                               className="border p-3 w-full rounded"
+                              required
+                              onChange={(e) => {
+                                setPassword(e.target.value);
+                              }}
+                              value={password}
                             />
                           </div>
                           <div className="mt-6">
@@ -112,12 +175,30 @@ const Login = (props) => {
                               type="submit"
                               className=" bg-indigo-700 text-white p-3 w-full rounded hover:bg-indigo-800"
                             >
-                              Login
+                              {loading ? (
+                                <>
+                                  <RefreshIcon className="w-6 h-6 animate-spin mr-3 inline" />
+                                  Please wait...
+                                </>
+                              ) : (
+                                <> Login</>
+                              )}
                             </button>
                           </div>
                         </form>
                       ) : (
-                        <form>
+                        <form onSubmit={registerHandler}>
+                          {registerError ? (
+                            <div className="rounded pt-3 pb-3 pl-6 pr-6 bg-orange-100 mb-4">
+                              <p className="text-orange-800 font-semibold">
+                                Error
+                              </p>
+                              <p className="text-orange-800">
+                                Sorry there was an error while processing your
+                                request.
+                              </p>
+                            </div>
+                          ) : null}
                           <div>
                             <label className="block mb-1 text-gray-600">
                               Name
@@ -126,6 +207,11 @@ const Login = (props) => {
                               type="text"
                               placeHolder="abc@gmail.com"
                               className="border p-3 w-full rounded"
+                              required
+                              onChange={(e) => {
+                                setName(e.target.value);
+                              }}
+                              value={name}
                             />
                           </div>
                           <div className="mt-3">
@@ -136,6 +222,11 @@ const Login = (props) => {
                               type="text"
                               placeHolder="abc@gmail.com"
                               className="border p-3 w-full rounded"
+                              required
+                              onChange={(e) => {
+                                setEmail(e.target.value);
+                              }}
+                              value={email}
                             />
                           </div>
                           <div className="mt-3">
@@ -143,8 +234,13 @@ const Login = (props) => {
                               Password
                             </label>
                             <input
+                              required
                               type="password"
                               className="border p-3 w-full rounded"
+                              onChange={(e) => {
+                                setPassword(e.target.value);
+                              }}
+                              value={password}
                             />
                           </div>
                           <div className="mt-6">
@@ -152,7 +248,14 @@ const Login = (props) => {
                               type="submit"
                               className=" bg-indigo-700 text-white p-3 w-full rounded hover:bg-indigo-800"
                             >
-                              Register
+                              {loading ? (
+                                <>
+                                  <RefreshIcon className="w-6 h-6 animate-spin mr-3 " />
+                                  Please wait...
+                                </>
+                              ) : (
+                                <> Register</>
+                              )}
                             </button>
                           </div>
                         </form>
