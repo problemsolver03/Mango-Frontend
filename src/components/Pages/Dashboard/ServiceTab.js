@@ -106,7 +106,7 @@ const ServiceTab = (props) => {
                                 alt=""
                               />
                             </div>
-                            <div className="ml-4">
+                            <div className="ml-4 max-w-xl block whitespace-nowrap break-all overflow-hidden text-ellipsis">
                               <div className="text-sm font-medium text-gray-900">
                                 {service.title}
                               </div>
