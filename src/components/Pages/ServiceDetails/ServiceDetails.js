@@ -7,6 +7,7 @@ import { PhoneOutgoingIcon } from "@heroicons/react/solid";
 import Calendar from "react-awesome-calendar";
 import ServiceReviews from "./ServiceReviews";
 import AddReview from "./AddReview";
+import axios from "axios";
 
 const ServiceDetails = (props) => {
   const [show, setShow] = useState(false);
@@ -15,7 +16,21 @@ const ServiceDetails = (props) => {
     setShow(!show);
   };
   const loadReviews = () => {
-    let serviceId = props.match.params.serviceId;
+    let serviceID = props.match.params.serviceId;
+    axios
+      .post(
+        "https://mango-api-server.herokuapp.com/reviews/get-reviews-by-service",
+        { serviceID }
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.error === undefined) {
+          setReviews(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -38,7 +53,7 @@ const ServiceDetails = (props) => {
               <h2 className="text-xl font-semibold pl-4 mt-4">
                 Mr. Superman Kumar
                 <div className="-mt-1">
-                  <Rating />
+                  <Rating value={2} />
                 </div>
               </h2>
             </div>
@@ -87,9 +102,14 @@ const ServiceDetails = (props) => {
 
               <div className="mt-5 mb-4">
                 <p className="text-gray-600 text-sm  pb-2">Reviews</p>
-                <ServiceReviews />
+                <ServiceReviews reviews={reviews} />
 
-                <button onClick={toggleReview}>Add Review</button>
+                <button
+                  onClick={toggleReview}
+                  className=" bg-indigo-600 p-3 text-white  rounded mt-4"
+                >
+                  Leave a review
+                </button>
 
                 <AddReview
                   show={show}

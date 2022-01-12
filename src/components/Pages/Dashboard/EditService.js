@@ -47,7 +47,7 @@ const EditService = (props) => {
 
     axios
       .post(
-        "https://mango-api-server.herokuapp.com/services/createService",
+        "https://mango-api-server.herokuapp.com/services/edit-service",
         postObject,
         {
           headers: {

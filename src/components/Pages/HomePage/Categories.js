@@ -3,6 +3,8 @@ import beautician from "../../../assets/saloon.svg";
 import doctor from "../../../assets/doctor.svg";
 import electrician from "../../../assets/electrician.svg";
 import plumber from "../../../assets/plumber.svg";
+import driver from "../../../assets/driver.svg";
+import dentist from "../../../assets/dentist.svg";
 import { Link } from "react-router-dom";
 
 const Categories = () => {
@@ -22,6 +24,14 @@ const Categories = () => {
     {
       name: "Plumber",
       icon: plumber,
+    },
+    {
+      name: "Dentist",
+      icon: dentist,
+    },
+    {
+      name: "Driver",
+      icon: driver,
     },
   ];
   return (

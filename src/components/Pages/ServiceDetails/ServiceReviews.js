@@ -1,21 +1,28 @@
 import React from "react";
 import profileImg from "../../../assets/50.jpg";
 import Rating from "../../Common/Rating";
-const ServiceReviews = () => {
+const ServiceReviews = (props) => {
+  if (props.reviews.length < 1) {
+    return null;
+  }
   return (
-    <div className="flex border-b pb-2 mt-2">
-      <img
-        src={profileImg}
-        alt="profile Image"
-        className="rounded-full h-11 w-11"
-      />
-      <div className="pl-2">
-        <Rating />
-        <p className="text-gray-800">
-          Great service provied by the doctor loved it.
-        </p>
-      </div>
-    </div>
+    <>
+      {props.reviews.map((review, i) => {
+        return (
+          <div className="flex border-b pb-2 mt-2" key={i}>
+            <span className="flex items-center justify-center bg-cyan-700 text-center h-9 w-9 mt-2 rounded-full">
+              <span className="text-white">
+                {review.user.charAt(0).toUpperCase()}
+              </span>
+            </span>
+            <div className="pl-2">
+              <p className="text-gray-800">{review.review}</p>
+              <Rating value={review.rating} className="-mt-0" />
+            </div>
+          </div>
+        );
+      })}
+    </>
   );
 };
 
