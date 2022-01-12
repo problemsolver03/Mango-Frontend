@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../../Layout";
 import Tabs from "./Tabs";
+import Cookies from "universal-cookie/es6";
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+  useEffect(() => {
+    let cookies = new Cookies();
+    let token = cookies.get("token");
+
+    if (!token) {
+      props.history.push("/");
+    }
+  }, []);
   return (
     <Layout>
       <section className="max-w-7xl mx-auto px-2 sm:px-4">

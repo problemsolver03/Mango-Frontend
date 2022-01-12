@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../Layout";
 import profileImg from "../../../assets/50.jpg";
 import Rating from "../../Common/Rating";
@@ -6,12 +6,25 @@ import { MailIcon } from "@heroicons/react/solid";
 import { PhoneOutgoingIcon } from "@heroicons/react/solid";
 import Calendar from "react-awesome-calendar";
 import ServiceReviews from "./ServiceReviews";
+import AddReview from "./AddReview";
 
-const ServiceDetails = () => {
+const ServiceDetails = (props) => {
+  const [show, setShow] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const toggleReview = () => {
+    setShow(!show);
+  };
+  const loadReviews = () => {
+    let serviceId = props.match.params.serviceId;
+  };
+
+  useEffect(() => {
+    loadReviews();
+  }, []);
   return (
     <Layout>
       <div className="max-w-7xl mx-auto  rounded-xl border mt-5">
-        <div className="bg-indigo-500 h-44 rounded-tl-xl rounded-tr-xl"></div>
+        <div className="bg-gradient-to-tl from-pink-300 via-purple-300 to-indigo-400 h-44 rounded-tl-xl rounded-tr-xl"></div>
         <div className="max-w-6xl mx-auto -mt-12 ">
           <div className="flex items-center">
             <div className="rounded-full">
@@ -75,10 +88,14 @@ const ServiceDetails = () => {
               <div className="mt-5 mb-4">
                 <p className="text-gray-600 text-sm  pb-2">Reviews</p>
                 <ServiceReviews />
-                <ServiceReviews />
-                <ServiceReviews />
-                <ServiceReviews />
-                <ServiceReviews />
+
+                <button onClick={toggleReview}>Add Review</button>
+
+                <AddReview
+                  show={show}
+                  toggleReview={toggleReview}
+                  serviceId={props.match.params.serviceId}
+                />
               </div>
             </div>
             <div className="col-span-2 border rounded p-4">

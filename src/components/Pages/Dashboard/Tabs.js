@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppointmentsTab from "./AppointmentsTab";
 import ReviewsTab from "./ReviewsTab";
 import SchedulesTab from "./SchedulesTab";
 import ServiceTab from "./ServiceTab";
+import Cookies from "universal-cookie";
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState(1);
+  const [userData, setUserData] = useState(null);
 
   const menuList = [
     {
@@ -29,6 +31,12 @@ const Tabs = () => {
   const activateTab = (tabid) => {
     setActiveTab(tabid);
   };
+
+  useEffect(() => {
+    let cookie = new Cookies();
+    let user = cookie.get("user");
+    setUserData(user);
+  }, []);
   return (
     <div className="mt-8">
       <ul className="flex bg-gray-100  rounded p-3">
@@ -60,10 +68,10 @@ const Tabs = () => {
         })}
       </ul>
 
-      {activeTab === 1 ? <ServiceTab /> : null}
-      {activeTab === 2 ? <ReviewsTab /> : null}
-      {activeTab === 3 ? <AppointmentsTab /> : null}
-      {activeTab === 4 ? <SchedulesTab /> : null}
+      {activeTab === 1 ? <ServiceTab user={userData} /> : null}
+      {activeTab === 2 ? <ReviewsTab user={userData} /> : null}
+      {activeTab === 3 ? <AppointmentsTab user={userData} /> : null}
+      {activeTab === 4 ? <SchedulesTab user={userData} /> : null}
     </div>
   );
 };

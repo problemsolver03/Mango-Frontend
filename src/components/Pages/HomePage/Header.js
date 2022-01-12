@@ -1,9 +1,38 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import logo from "../../../assets/logo.svg";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
+import axios from "axios";
+import DropDown from "./DropDown";
 const Header = (props) => {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    checkUser();
+  }, []);
+  const checkUser = () => {
+    let cookie = new Cookies();
+    let token = cookie.get("token");
+
+    if (token) {
+      setUser({ username: "User", name: "user" });
+      axios
+        .get("https://mango-api-server.herokuapp.com/get-profile-data", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          cookie.set("user", res.data);
+          setUser(res.data);
+        })
+        .catch((err) => {
+          setUser(null);
+          console.log(err);
+        });
+    } else {
+      setUser(null);
+    }
+  };
   return (
     <Popover className="relative bg-white  border-b-2 border-gray-100">
       <div className="max-w-7xl mx-auto px-2 sm:px-4">
@@ -40,24 +69,43 @@ const Header = (props) => {
             >
               Contact
             </Link>
+            {user === null ? null : (
+              <Link
+                to="/dashboard"
+                className="text-base font-medium text-gray-500 hover:text-gray-900"
+              >
+                Dashboard
+              </Link>
+            )}
           </Popover.Group>
           <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-            <span
-              onClick={() => {
-                props.toggleLogin("login");
-              }}
-              className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 cursor-pointer"
-            >
-              Sign in
-            </span>
-            <span
-              onClick={() => {
-                props.toggleLogin("register");
-              }}
-              className="cursor-pointer ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-            >
-              Sign up
-            </span>
+            {user === null ? (
+              <>
+                <span
+                  onClick={() => {
+                    props.toggleLogin("login");
+                  }}
+                  className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 cursor-pointer"
+                >
+                  Sign in
+                </span>
+                <span
+                  onClick={() => {
+                    props.toggleLogin("register");
+                  }}
+                  className="cursor-pointer ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                >
+                  Sign up
+                </span>
+              </>
+            ) : (
+              <div>
+                {/* <span className="w-10 h-10 bg-indigo-300 rounded-full flex justify-center items-center">
+                  W
+                </span> */}
+                <DropDown user={user} />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -115,17 +163,36 @@ const Header = (props) => {
                 >
                   Contact
                 </Link>
+                {user === null ? null : (
+                  <Link
+                    to="/dashbaord"
+                    className="text-base font-medium text-gray-500 hover:text-gray-900"
+                  >
+                    Dashboard
+                  </Link>
+                )}
               </div>
               <div>
-                <span className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-                  Sign up
-                </span>
-                <p className="mt-6 text-center text-base font-medium text-gray-500">
-                  Existing customer?{" "}
-                  <span className="text-indigo-600 hover:text-indigo-500">
-                    Sign in
-                  </span>
-                </p>
+                {user === null ? (
+                  <>
+                    <span className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                      Sign up
+                    </span>
+                    <p className="mt-6 text-center text-base font-medium text-gray-500">
+                      Existing customer?{" "}
+                      <span className="text-indigo-600 hover:text-indigo-500">
+                        Sign in
+                      </span>
+                    </p>
+                  </>
+                ) : (
+                  <div>
+                    {" "}
+                    <span className="w-24 h-24 bg-indigo-300 rounded-full block">
+                      W
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -6,6 +6,7 @@ import logo from "../../../assets/logo.svg";
 import Cookies from "universal-cookie/es6";
 import axios from "axios";
 import { RefreshIcon } from "@heroicons/react/solid";
+import { withRouter } from "react-router-dom";
 
 const Login = (props) => {
   const [open, setOpen] = useState(false);
@@ -38,13 +39,20 @@ const Login = (props) => {
     axios
       .post("https://mango-api-server.herokuapp.com/signup", postObject)
       .then((res) => {
-        console.log(res);
+        let cookies = new Cookies();
+        if (res.data.error) {
+          setLoading(false);
+          setRegisterError(true);
+        } else if (res.data.token) {
+          cookies.set("token", res.data.token);
+          props.history.push("/dashboard");
+        }
+        setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        setRegisterError(true);
+        setLoading(false);
       });
-
-    setLoading(false);
   };
   const loginHandler = (e) => {
     e.preventDefault();
@@ -54,13 +62,18 @@ const Login = (props) => {
     axios
       .post("https://mango-api-server.herokuapp.com/login", postObject)
       .then((res) => {
-        console.log(res);
+        let cookies = new Cookies();
+        cookies.set("token", res.data.token);
+        if (res.data.token) {
+          props.history.push("/dashboard");
+        }
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
         setLoginError(true);
+        setLoading(false);
       });
-    setLoading(false);
   };
 
   return (
@@ -147,7 +160,7 @@ const Login = (props) => {
                             </label>
                             <input
                               type="text"
-                              placeHolder="abc@gmail.com"
+                              placeholder="abc@gmail.com"
                               className="border p-3 w-full rounded"
                               required
                               onChange={(e) => {
@@ -205,7 +218,7 @@ const Login = (props) => {
                             </label>
                             <input
                               type="text"
-                              placeHolder="abc@gmail.com"
+                              placeholder="abc@gmail.com"
                               className="border p-3 w-full rounded"
                               required
                               onChange={(e) => {
@@ -220,7 +233,7 @@ const Login = (props) => {
                             </label>
                             <input
                               type="text"
-                              placeHolder="abc@gmail.com"
+                              placeholder="abc@gmail.com"
                               className="border p-3 w-full rounded"
                               required
                               onChange={(e) => {
@@ -250,7 +263,7 @@ const Login = (props) => {
                             >
                               {loading ? (
                                 <>
-                                  <RefreshIcon className="w-6 h-6 animate-spin mr-3 " />
+                                  <RefreshIcon className="w-6 h-6 animate-spin mr-3 inline" />
                                   Please wait...
                                 </>
                               ) : (
@@ -287,4 +300,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default withRouter(Login);
