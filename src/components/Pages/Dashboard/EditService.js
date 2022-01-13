@@ -72,7 +72,7 @@ const EditService = (props) => {
     "Doctor",
     "Beautician",
     "Plumber",
-    "Electirician",
+    "Electrician",
     "Driver",
     "Mechanic",
     "Dentist",
