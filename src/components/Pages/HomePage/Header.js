@@ -14,7 +14,7 @@ const Header = (props) => {
 
   useEffect(() => {
     checkUser();
-  }, []);
+  }, [props]);
 
   const toggleLogin = (type) => {
     setLoginType(type);

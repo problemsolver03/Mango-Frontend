@@ -4,7 +4,7 @@ import Rating from "../../Common/Rating";
 
 const ProfileCard = (props) => {
   return (
-    <Link to="/servicedetails/123">
+    <Link to={`/servicedetails/${props.service._id}`}>
       <div className="m-3 border h-36 rounded-lg flex items-center hover:bg-indigo-100 hover:rounded-2xl hover:border-violet-900">
         <img
           src={props.service.image}

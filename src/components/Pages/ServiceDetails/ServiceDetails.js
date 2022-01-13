@@ -136,18 +136,18 @@ const ServiceDetails = (props) => {
               <img
                 src={serviceDetails.image}
                 alt="profileimage"
-                className="rounded-full border-8 border-white"
+                className="rounded-full border-8 border-white h-28 w-28 border-cyan-100"
               />
             </div>
             <div className="w-1/2">
-              <h2 className="text-xl font-semibold pl-4 mt-4">
+              <h2 className="text-xl font-semibold pl-4 mt-10">
                 {serviceDetails.title}
                 <div className="-mt-1">
                   <Rating value={2} />
                 </div>
               </h2>
             </div>
-            <div className=" mt-4 w-1/3 text-right">
+            <div className=" mt-10 w-1/3 text-right">
               <button className="bg-gray-100 text-indigo-700 mr-4 p-2 rounded cursor-pointer hover:bg-indigo-600 hover:text-white">
                 <MailIcon className="h-5 w-5 inline" /> Message
               </button>
@@ -158,7 +158,7 @@ const ServiceDetails = (props) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-5 gap-4 mb-6">
+          <div className="grid grid-cols-5 gap-4 mb-6 mt-5">
             <div className="col-span-3 border rounded p-4">
               <h3 className="font-semibold text-gray-900 text-lg">
                 Service Details

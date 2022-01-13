@@ -25,7 +25,6 @@ const ServiceTab = (props) => {
       let cookie = new Cookies();
       let token = cookie.get("token");
       let user = cookie.get("user");
-      console.log(token, user);
 
       axios
         .post(

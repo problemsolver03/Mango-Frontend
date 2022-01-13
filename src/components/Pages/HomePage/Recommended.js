@@ -3,7 +3,6 @@ import ProfileCard from "./ProfileCard";
 import axios from "axios";
 
 const Recommended = () => {
-  const users = [1, 2, 3, 4, 5, 6];
   const [loading, setLoading] = useState(true);
   const [services, setServices] = useState([]);
 
@@ -16,7 +15,6 @@ const Recommended = () => {
 
           setServices(recommended);
         }
-        console.log(res);
 
         setLoading(false);
       })
