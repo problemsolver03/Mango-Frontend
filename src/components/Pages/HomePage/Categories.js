@@ -18,7 +18,7 @@ const Categories = () => {
       icon: doctor,
     },
     {
-      name: "Electician",
+      name: "Electrician",
       icon: electrician,
     },
     {
