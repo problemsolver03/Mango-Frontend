@@ -8,7 +8,7 @@ const SearchResultItem = ({ service }) => {
       <div className="flex flex-col items-center">
         <img
           src={service.image}
-          alt="profile Image"
+          alt="profile"
           className="rounded-full w-14 h-14 border-2"
         />
         <Rating className="mt-0" />

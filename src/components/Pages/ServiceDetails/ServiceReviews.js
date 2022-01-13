@@ -1,5 +1,4 @@
 import React from "react";
-import profileImg from "../../../assets/50.jpg";
 import Rating from "../../Common/Rating";
 const ServiceReviews = (props) => {
   if (props.reviews.length < 1) {

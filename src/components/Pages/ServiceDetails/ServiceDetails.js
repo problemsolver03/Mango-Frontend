@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../Layout";
-import profileImg from "../../../assets/50.jpg";
 import Rating from "../../Common/Rating";
 import { MailIcon } from "@heroicons/react/solid";
 import { PhoneOutgoingIcon } from "@heroicons/react/solid";
@@ -8,12 +7,41 @@ import Calendar from "react-awesome-calendar";
 import ServiceReviews from "./ServiceReviews";
 import AddReview from "./AddReview";
 import axios from "axios";
+import AddAppointment from "./AddAppointments";
+import moment from "moment";
 
 const ServiceDetails = (props) => {
   const [show, setShow] = useState(false);
+  const [showAppointment, setShowAppointment] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [serviceDetails, setServiceDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [appointmentDate, setAppointmentDate] = useState(null);
+  const [events, setEvents] = useState(null);
   const toggleReview = () => {
     setShow(!show);
+  };
+
+  const toggleAppointment = () => {
+    setShowAppointment(!showAppointment);
+  };
+
+  const loadServiceDetails = () => {
+    let serviceID = props.match.params.serviceId;
+    axios
+      .post("https://mango-api-server.herokuapp.com/services/get-service", {
+        serviceID,
+      })
+      .then((res) => {
+        if (res.data) {
+          setServiceDetails(res.data);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
   };
   const loadReviews = () => {
     let serviceID = props.match.params.serviceId;
@@ -23,7 +51,6 @@ const ServiceDetails = (props) => {
         { serviceID }
       )
       .then((res) => {
-        console.log(res);
         if (res.error === undefined) {
           setReviews(res.data);
         }
@@ -33,9 +60,72 @@ const ServiceDetails = (props) => {
       });
   };
 
+  const loadAppointments = () => {
+    let serviceID = props.match.params.serviceId;
+    axios
+      .post(
+        "https://mango-api-server.herokuapp.com/appointments/get-appointments-service",
+        { serviceID }
+      )
+      .then((res) => {
+        console.log(res);
+        // if (res.error === undefined) {
+        //   console.log(res.data);
+        // }
+        const events = [];
+
+        let appointmentData = res.data;
+
+        const getTodate = (date) => {
+          var toDate = moment(date).add(30, "minutes").format();
+          return toDate;
+        };
+
+        for (let i = 0; i < appointmentData.length; i++) {
+          events.push({
+            id: appointmentData[i]["_id"],
+            color: "red",
+            title: "Booked",
+            from: appointmentData[i]["date"],
+            to: getTodate(appointmentData[i]["date"]),
+          });
+        }
+        setEvents(events);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const triggerAppointMent = (dateRaw) => {
+    let time = dateRaw.hour.toString().split(".");
+
+    let date = `${dateRaw.year}-${
+      dateRaw.month + 1 < 10 ? `0${dateRaw.month + 1}` : `${dateRaw.month + 1}`
+    }-${dateRaw.day + 1 < 10 ? `0${dateRaw.day + 1}` : `${dateRaw.day + 1}`}T${
+      time[0].length < 2 ? `0${time[0]}` : time[0]
+    }:${time[1] !== undefined ? time[1] * 6 : "00"}:00`;
+    setAppointmentDate(date);
+    setShowAppointment(true);
+  };
+
   useEffect(() => {
+    loadServiceDetails();
     loadReviews();
+    loadAppointments();
   }, []);
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="max-w-7xl mx-auto  rounded-xl  mt-5">
+          <p className="text-lg text-center font-semibold">
+            Please wait while reterive the service details.
+          </p>
+        </div>
+      </Layout>
+    );
+  }
   return (
     <Layout>
       <div className="max-w-7xl mx-auto  rounded-xl border mt-5">
@@ -44,14 +134,14 @@ const ServiceDetails = (props) => {
           <div className="flex items-center">
             <div className="rounded-full">
               <img
-                src={profileImg}
-                alt="profile image"
+                src={serviceDetails.image}
+                alt="profileimage"
                 className="rounded-full border-8 border-white"
               />
             </div>
             <div className="w-1/2">
               <h2 className="text-xl font-semibold pl-4 mt-4">
-                Mr. Superman Kumar
+                {serviceDetails.title}
                 <div className="-mt-1">
                   <Rating value={2} />
                 </div>
@@ -81,23 +171,17 @@ const ServiceDetails = (props) => {
               <div className="flex mt-4 mb-4">
                 <div className="w-1/2">
                   <p className="text-gray-600 pb-1 text-sm ">Category</p>
-                  <p>Doctor</p>
+                  <p>{serviceDetails.category}</p>
                 </div>
                 <div className="w-1/2">
                   <p className="text-gray-600 pb-1 text-sm ">Price</p>
-                  <p>USD 23.45</p>
+                  <p>USD {serviceDetails.price}</p>
                 </div>
               </div>
               <hr className="-ml-4 -mr-4" />
               <div className="mt-5 mb-4">
                 <p className="text-gray-600 pb-1 text-sm ">About service</p>
-                <p>
-                  It is a long established fact that a reader will be distracted
-                  by the readable content of a page when looking at its layout.
-                  The point of using Lorem Ipsum is that it has a more-or-less
-                  normal distribution of letters, as opposed to using 'Content
-                  here, content here', making it look like readable English.
-                </p>
+                <p>{serviceDetails.description}</p>
               </div>
 
               <div className="mt-5 mb-4">
@@ -115,6 +199,7 @@ const ServiceDetails = (props) => {
                   show={show}
                   toggleReview={toggleReview}
                   serviceId={props.match.params.serviceId}
+                  loadReviews={loadReviews}
                 />
               </div>
             </div>
@@ -123,11 +208,24 @@ const ServiceDetails = (props) => {
                 Schedule appointment
               </h3>
 
-              <Calendar mode="daily" />
+              <Calendar
+                mode="daily"
+                events={events}
+                onClickTimeLine={(value) => {
+                  triggerAppointMent(value);
+                }}
+              />
             </div>
           </div>
         </div>
       </div>
+      <AddAppointment
+        serviceID={serviceDetails}
+        show={showAppointment}
+        toggleAppointment={toggleAppointment}
+        appointmentDate={appointmentDate}
+        loadServiceDetails={loadServiceDetails}
+      />
     </Layout>
   );
 };

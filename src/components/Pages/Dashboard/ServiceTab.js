@@ -21,27 +21,31 @@ const ServiceTab = (props) => {
     setToggleEditService(!toggleEditService);
   };
   const getServices = () => {
-    let cookie = new Cookies();
-    let token = cookie.get("token");
+    setTimeout(() => {
+      let cookie = new Cookies();
+      let token = cookie.get("token");
+      let user = cookie.get("user");
+      console.log(token, user);
 
-    axios
-      .post(
-        "https://mango-api-server.herokuapp.com/services/services-by-user",
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      .then((res) => {
-        if (res.data) {
-          setServices(res.data);
-        }
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+      axios
+        .post(
+          "https://mango-api-server.herokuapp.com/services/services-by-user",
+          { user: user._id },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then((res) => {
+          if (res.data) {
+            setServices(res.data);
+          }
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
+    }, 1000);
   };
 
   useEffect(() => {

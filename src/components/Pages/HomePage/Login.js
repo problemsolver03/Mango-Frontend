@@ -31,9 +31,16 @@ const Login = (props) => {
     }
   }, [props.show]);
 
+  const clearCookies = () => {
+    let cookie = new Cookies();
+    cookie.remove("user");
+    cookie.remove("token");
+  };
+
   const registerHandler = (e) => {
     e.preventDefault();
     setLoading(true);
+    clearCookies();
 
     let postObject = { name, username: email, password };
     axios
@@ -57,7 +64,7 @@ const Login = (props) => {
   const loginHandler = (e) => {
     e.preventDefault();
     setLoading(true);
-
+    clearCookies();
     let postObject = { username: email, password };
     axios
       .post("https://mango-api-server.herokuapp.com/login", postObject)
