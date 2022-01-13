@@ -1,6 +1,8 @@
 import React from "react";
 
 const ReviewsTab = () => {
+  // const getReviews = () => {};
+
   const people = [
     {
       name: "Jane Cooper",
@@ -14,15 +16,6 @@ const ReviewsTab = () => {
   ];
   return (
     <div className="border p-3">
-      {/* <div>
-        <h3 className="text-base mt-2 font-semibold">
-          List of your active services
-        </h3>
-        <p className="text-sm text-gray-700">
-          Add new services or edit your existign services.
-        </p>
-      </div> */}
-
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">

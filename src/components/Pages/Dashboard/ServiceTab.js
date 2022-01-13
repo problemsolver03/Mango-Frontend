@@ -153,6 +153,7 @@ const ServiceTab = (props) => {
           toggleAddService={toggleEdService}
           show={toggleEditService}
           selectedService={selectedService}
+          getServices={getServices}
         />
       ) : null}
     </div>

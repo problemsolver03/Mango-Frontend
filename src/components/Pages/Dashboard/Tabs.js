@@ -15,16 +15,16 @@ const Tabs = () => {
       id: 1,
     },
     {
+      name: "My Schedules",
+      id: 4,
+    },
+    {
       name: "My Reviews",
       id: 2,
     },
     {
       name: "My Appointments",
       id: 3,
-    },
-    {
-      name: "My Schedules",
-      id: 4,
     },
   ];
 

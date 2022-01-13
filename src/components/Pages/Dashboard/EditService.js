@@ -1,8 +1,8 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import Cookies from "universal-cookie";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 const EditService = (props) => {
   const [open, setOpen] = useState(props.show);
@@ -43,23 +43,21 @@ const EditService = (props) => {
       email,
       image,
       address,
+      serviceID: props.selectedService._id,
     };
 
     axios
       .post(
         "https://mango-api-server.herokuapp.com/services/edit-service",
         postObject,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((res) => {
         if (res.data.error) {
           setError(true);
         } else {
           props.toggleAddService();
+          props.getServices();
           setError(false);
         }
         setLoading(false);
@@ -226,7 +224,7 @@ const EditService = (props) => {
                       className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                       disabled={loading ? true : false}
                     >
-                      {loading ? "Please wait.." : "Register"}
+                      {loading ? "Please wait.." : "Update"}
                     </button>
                     <button
                       type="button"
